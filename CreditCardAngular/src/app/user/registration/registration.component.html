@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="container register" *ngIf="IsShowReg">
+    <form #frm [formGroup]="service.userModel" autocomplete="off" (submit)="onSubmit()">
+      <div class="row">
+        <div class="col-md-3 register-left">
+          <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt="" />
+          <h3>Welcome</h3>
+          <p>You are just 5 seconds away to check your card eligibility!</p>
+        </div>
+        <div class="col-md-9 register-right">
+          <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+            <li class="nav-item" (click)="toggleText('Credit')">
+              <a class="nav-link active" id="home-tab" data-toggle="tab"  role="tab" aria-controls="credit" aria-selected="true">Credit</a>
+            </li>
+            <li class="nav-item" (click)="toggleText('Debit')">
+              <a class="nav-link" id="profile-tab" data-toggle="tab" role="tab" aria-controls="debit" aria-selected="false">Debit</a>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+              <h3 class="register-heading">{{cardType}} </h3>
+              <div class="row register-form">
+                <div class="col-md-5">
+                  <div class="form-group required">
+                    <input class="form-control" formControlName="FirstName" placeholder="Your First Name *" minlength="1" maxlength="30">
+                    <label class="text-danger" *ngIf="service.userModel.get('FirstName').touched && service.userModel.get('FirstName').errors?.required">Please enter your first name.</label>
+                  </div>
+                  <div class="form-group required">
+                    <input class="form-control" formControlName="LastName" placeholder="Your Last Name *" minlength="1" maxlength="30">
+                    <label class="text-danger" *ngIf="service.userModel.get('LastName').touched && service.userModel.get('LastName').errors?.required">Please enter your last name.</label>
+                  </div>
+                  <div class="form-group required">
+                    <input type="date" class="form-control" formControlName="DOB" max="2200-12-31" min="1900-12-31" title="Enter your date of birth">
+                    <label class="text-danger" *ngIf="service.userModel.get('DOB').touched && service.userModel.get('DOB').errors?.required">Please enter your DOB.</label>
+                  </div>
+                  <div class="form-group required">
+                    <input type="number" min="1" onKeyPress="if(this.value.length==15) return false;" class="form-control" formControlName="AnnualSalary" placeholder="Enter Your Annual Salary *">
+                    <label class="text-danger" *ngIf="service.userModel.get('AnnualSalary').touched && service.userModel.get('AnnualSalary').errors?.required">Please enter your annual salary.</label>
+                  </div>
+
+                  <button type="submit" class="btnRegister" [disabled]="!service.userModel.valid" (click)="enableSpinner()">Submit</button>
+                  <div  class="spinner-border text-success" *ngIf="IsSpinner" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                </div>
+                  <div class="form-group required"  >
+                  <img src="/../../assets/img/card-1.png" alt="" />
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+          
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<app-displaycard [fromResultMessage]="ResultMessage" [fromCurrentImage] ="CurrentImage" [alertClass]="AlertClassParent" *ngIf="IsCardEligible" (backHome)="backToHome($event)"></app-displaycard>
