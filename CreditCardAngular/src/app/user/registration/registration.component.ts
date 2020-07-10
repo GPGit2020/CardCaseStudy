@@ -74,7 +74,8 @@ export class RegistrationComponent implements OnInit {
       this.CurrentImage = "/../../assets/img/bar.png";
     }
 
-    else {
+    else if ((userAge >= 18 && parseFloat(annualSal) < 30000))
+    {
       this.arpCode = 1.5;
       this.PromotionalMessage = "You will alos get the additional 1% cashback on your every purchase.";
 
